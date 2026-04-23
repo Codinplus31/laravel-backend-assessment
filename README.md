@@ -1,4 +1,4 @@
-# 🏪 Vendor Product & Inventory Management System API
+#  Vendor Product & Inventory Management System API
 
 > A production-ready RESTful API built with **Laravel 12** for a multi-vendor product system with inventory management and atomic order simulation.
 
@@ -285,7 +285,7 @@ Content-Type: application/json
 | `password` | string | Yes |
 
 <details>
-<summary>📋 Example Response</summary>
+<summary> Example Response</summary>
 
 **Response (200):**
 ```json
@@ -465,7 +465,7 @@ The collection includes **automatic token saving**:
 
 ---
 
-## 🗄 Database Design
+##  Database Design
 
 ### Entity Relationship
 
