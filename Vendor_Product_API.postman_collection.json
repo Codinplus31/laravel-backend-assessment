@@ -1,0 +1,913 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Vendor Product & Inventory API",
+		"description": "Complete API collection for the Vendor Product & Inventory Management System built with Laravel.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"description": "Vendor registration, login, and logout endpoints.",
+			"item": [
+				{
+					"name": "Register Vendor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set('token', jsonData.data.token);",
+									"    console.log('Token saved:', jsonData.data.token);",
+									"}",
+									"",
+									"pm.test('Status code is 201', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response has token', function () {",
+									"    pm.expect(jsonData.data).to.have.property('token');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Test Vendor\",\n    \"email\": \"newvendor@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						},
+						"description": "Register a new vendor account. Returns an API token that is automatically saved for subsequent requests."
+					},
+					"response": []
+				},
+				{
+					"name": "Login Vendor (Fashion Hub)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set('token', jsonData.data.token);",
+									"    console.log('Token saved:', jsonData.data.token);",
+									"}",
+									"",
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has token', function () {",
+									"    pm.expect(jsonData.data).to.have.property('token');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"fashionhub@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						},
+						"description": "Login with the seeded Fashion Hub Nigeria vendor. Token is automatically saved."
+					},
+					"response": []
+				},
+				{
+					"name": "Login Vendor (Luxe Accessories)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.success && jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set('token', jsonData.data.token);",
+									"    console.log('Token saved:', jsonData.data.token);",
+									"}",
+									"",
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"luxeaccessories@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						},
+						"description": "Login with the seeded Luxe Accessories vendor."
+					},
+					"response": []
+				},
+				{
+					"name": "Login - Invalid Credentials",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"fashionhub@example.com\",\n    \"password\": \"wrongpassword\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": ["{{base_url}}"],
+							"path": ["login"]
+						},
+						"description": "Test login with incorrect password. Should return 422."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": ["{{base_url}}"],
+							"path": ["logout"]
+						},
+						"description": "Logout and revoke the current API token. You will need to login again after this."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendor Products (Authenticated)",
+			"description": "Endpoints for vendors to manage their own products. Requires Bearer token.",
+			"item": [
+				{
+					"name": "List My Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/vendor/products?per_page=15&page=1",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products"],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "15",
+									"description": "Items per page (default: 15)"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								}
+							]
+						},
+						"description": "Get all products belonging to the authenticated vendor (paginated)."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Premium African Print Shirt\",\n    \"description\": \"High-quality African print shirt made with premium cotton fabric.\",\n    \"price\": 12500.00,\n    \"stock_quantity\": 30,\n    \"status\": \"active\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/vendor/products",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products"]
+						},
+						"description": "Create a new product for the authenticated vendor."
+					},
+					"response": []
+				},
+				{
+					"name": "View My Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/vendor/products/1",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products", "1"]
+						},
+						"description": "View a single product owned by the authenticated vendor. Change the ID as needed."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Product Name\",\n    \"price\": 15000.00,\n    \"stock_quantity\": 45\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/vendor/products/1",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products", "1"]
+						},
+						"description": "Update a product. All fields are optional (partial update). Only the product owner can update."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Set Inactive",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"inactive\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/vendor/products/1",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products", "1"]
+						},
+						"description": "Deactivate a product so it no longer shows in public listings."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Negative Stock (Should Fail)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"stock_quantity\": -5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/vendor/products/1",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products", "1"]
+						},
+						"description": "Attempt to set negative stock. Should return 422 validation error."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/vendor/products/1",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products", "1"]
+						},
+						"description": "Delete a product. Only the product owner can delete. Change the ID as needed."
+					},
+					"response": []
+				},
+				{
+					"name": "View Another Vendor's Product (Should Fail)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/vendor/products/8",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products", "8"]
+						},
+						"description": "Attempt to view a product belonging to another vendor. Should return 403 Forbidden. (Login as vendor 1 first, then try to access vendor 2's product)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public Products (No Auth)",
+			"description": "Public endpoints accessible by guests. No authentication needed.",
+			"item": [
+				{
+					"name": "List All Active Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": ["{{base_url}}"],
+							"path": ["products"]
+						},
+						"description": "Get all active products from all vendors (paginated, cached for 60s)."
+					},
+					"response": []
+				},
+				{
+					"name": "List Active Products (Paginated)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?per_page=5&page=1",
+							"host": ["{{base_url}}"],
+							"path": ["products"],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Get active products with custom pagination (5 items per page)."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?search=ankara",
+							"host": ["{{base_url}}"],
+							"path": ["products"],
+							"query": [
+								{
+									"key": "search",
+									"value": "ankara",
+									"description": "Search term to filter products by name"
+								}
+							]
+						},
+						"description": "Search active products by name. Uses LIKE matching."
+					},
+					"response": []
+				},
+				{
+					"name": "Search Products - Silk",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products?search=silk",
+							"host": ["{{base_url}}"],
+							"path": ["products"],
+							"query": [
+								{
+									"key": "search",
+									"value": "silk"
+								}
+							]
+						},
+						"description": "Search for silk products."
+					},
+					"response": []
+				},
+				{
+					"name": "View Single Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": ["{{base_url}}"],
+							"path": ["products", "1"]
+						},
+						"description": "View a single active product by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "View Inactive Product (Should Fail)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/5",
+							"host": ["{{base_url}}"],
+							"path": ["products", "5"]
+						},
+						"description": "Attempt to view an inactive product (ID 5 is inactive in seed data). Should return 404."
+					},
+					"response": []
+				},
+				{
+					"name": "View Non-Existent Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/products/9999",
+							"host": ["{{base_url}}"],
+							"path": ["products", "9999"]
+						},
+						"description": "Attempt to view a product that doesn't exist. Should return 404."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"description": "Order simulation endpoints. No authentication required.",
+			"item": [
+				{
+					"name": "Place Order - Success",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 1,\n    \"customer_name\": \"John Doe\",\n    \"customer_email\": \"john@example.com\",\n    \"quantity\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Place an order for 2 units of product #1. Stock will be reduced atomically."
+					},
+					"response": []
+				},
+				{
+					"name": "Place Order - Larger Quantity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 3,\n    \"customer_name\": \"Jane Smith\",\n    \"customer_email\": \"jane@example.com\",\n    \"quantity\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Place an order for 5 units of product #3."
+					},
+					"response": []
+				},
+				{
+					"name": "Place Order - Insufficient Stock (Should Fail)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 1,\n    \"customer_name\": \"Buyer\",\n    \"customer_email\": \"buyer@example.com\",\n    \"quantity\": 9999\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Attempt to order more items than available stock. Should return 422 with insufficient stock message."
+					},
+					"response": []
+				},
+				{
+					"name": "Place Order - Inactive Product (Should Fail)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 5,\n    \"customer_name\": \"Buyer\",\n    \"customer_email\": \"buyer@example.com\",\n    \"quantity\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Attempt to order an inactive product (ID 5). Should return 422."
+					},
+					"response": []
+				},
+				{
+					"name": "Place Order - Zero Quantity (Should Fail)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"product_id\": 1,\n    \"customer_name\": \"Buyer\",\n    \"customer_email\": \"buyer@example.com\",\n    \"quantity\": 0\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Attempt to order with zero quantity. Should return 422 validation error."
+					},
+					"response": []
+				},
+				{
+					"name": "Place Order - Missing Fields (Should Fail)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": ["{{base_url}}"],
+							"path": ["orders"]
+						},
+						"description": "Attempt to place an order with no data. Should return 422 with all validation errors."
+					},
+					"response": []
+				},
+				{
+					"name": "View Order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/orders/1",
+							"host": ["{{base_url}}"],
+							"path": ["orders", "1"]
+						},
+						"description": "View an order by ID. Place an order first to get a valid ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Edge Cases & Error Handling",
+			"description": "Requests designed to test edge cases and error handling.",
+			"item": [
+				{
+					"name": "Access Protected Route Without Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/vendor/products",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products"]
+						},
+						"description": "Attempt to access a protected endpoint without an auth token. Should return 401."
+					},
+					"response": []
+				},
+				{
+					"name": "Access Protected Route With Invalid Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid_token_here"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/vendor/products",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products"]
+						},
+						"description": "Attempt to access a protected endpoint with an invalid token. Should return 401."
+					},
+					"response": []
+				},
+				{
+					"name": "Register - Duplicate Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Duplicate Vendor\",\n    \"email\": \"fashionhub@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": ["{{base_url}}"],
+							"path": ["register"]
+						},
+						"description": "Attempt to register with an email that already exists. Should return 422."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Invalid Price",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Bad Product\",\n    \"price\": -10,\n    \"stock_quantity\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/vendor/products",
+							"host": ["{{base_url}}"],
+							"path": ["vendor", "products"]
+						},
+						"description": "Attempt to create a product with a negative price. Should return 422."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

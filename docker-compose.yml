@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # PHP Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vendor-api-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - vendor-api-network
+    depends_on:
+      - db
+
+  # Nginx Web Server
+  nginx:
+    image: nginx:alpine
+    container_name: vendor-api-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - vendor-api-network
+    depends_on:
+      - app
+
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: vendor-api-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: vendor_product_api
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - vendor-api-network
+
+networks:
+  vendor-api-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
