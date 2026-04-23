@@ -180,7 +180,7 @@ docker-compose exec app php artisan test
 
 ---
 
-## 📖 API Documentation
+##  API Documentation
 
 ### Base URL
 
