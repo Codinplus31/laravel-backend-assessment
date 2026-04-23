@@ -6,7 +6,7 @@ Built as part of the **Losode Backend Developer Assessment**.
 
 ---
 
-## 📑 Table of Contents
+##  Table of Contents
 
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
@@ -21,22 +21,22 @@ Built as part of the **Losode Backend Developer Assessment**.
 
 ---
 
-## ✨ Features
+##  Features
 
 | Feature | Description |
 |---------|-------------|
-| 🔐 Vendor Authentication | Register, login, logout with Laravel Sanctum token-based auth |
-| 📦 Product Management | Full CRUD operations with ownership authorization |
-| 🌐 Public Product Access | View active products, search by name, pagination |
-| 📊 Inventory Management | Concurrent-safe stock updates with pessimistic locking |
-| 🛒 Order Simulation | Atomic order placement with transaction-based stock management |
-| ⚡ Caching | Product listing cache with automatic invalidation |
-| 🐳 Docker Support | Full Docker setup with PHP-FPM, Nginx, and MySQL |
-| 🧪 Feature Tests | Comprehensive test coverage for all endpoints (28 tests) |
+|  Vendor Authentication | Register, login, logout with Laravel Sanctum token-based auth |
+|  Product Management | Full CRUD operations with ownership authorization |
+|  Public Product Access | View active products, search by name, pagination |
+|  Inventory Management | Concurrent-safe stock updates with pessimistic locking |
+|  Order Simulation | Atomic order placement with transaction-based stock management |
+|  Caching | Product listing cache with automatic invalidation |
+|  Docker Support | Full Docker setup with PHP-FPM, Nginx, and MySQL |
+|  Feature Tests | Comprehensive test coverage for all endpoints (28 tests) |
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Technology | Purpose |
 |------------|---------|
@@ -49,7 +49,7 @@ Built as part of the **Losode Backend Developer Assessment**.
 
 ---
 
-## 🏗 Architecture
+##  Architecture
 
 This project follows the **Service/Repository** pattern to keep controllers thin and business logic testable:
 
@@ -67,7 +67,7 @@ HTTP Request → Controller → Service → Repository → Model → Database
 | **Traits** | Reusable API response formatting |
 
 <details>
-<summary>📁 Click to expand directory structure</summary>
+<summary> Click to expand directory structure</summary>
 
 ```
 app/
@@ -108,7 +108,7 @@ app/
 
 ---
 
-## 🚀 Setup Instructions
+##  Setup Instructions
 
 ### Option 1: Local Setup
 
@@ -116,7 +116,7 @@ app/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/vendor-product-api.git
+git clone https://github.com/Codinplus31/laravel-backend-assessment.git
 cd vendor-product-api
 
 # 2. Install dependencies
@@ -149,7 +149,7 @@ php artisan serve
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/vendor-product-api.git
+git clone https://github.com/Codinplus31/laravel-backend-assessment.git
 cd vendor-product-api
 
 # 2. Configure environment
@@ -224,7 +224,7 @@ All endpoints return a consistent JSON structure:
 
 ---
 
-### 1️⃣ Authentication
+###  Authentication
 
 #### Register a Vendor
 
@@ -241,7 +241,7 @@ Content-Type: application/json
 | `password_confirmation` | string | Yes | must match password |
 
 <details>
-<summary>📋 Example Request & Response</summary>
+<summary> Example Request & Response</summary>
 
 **Request:**
 ```json
@@ -315,9 +315,9 @@ Authorization: Bearer {token}
 
 ---
 
-### 2️⃣ Vendor Product Management (Authenticated)
+###  Vendor Product Management (Authenticated)
 
-> ⚠️ All vendor routes require the header: `Authorization: Bearer {token}`
+>  All vendor routes require the header: `Authorization: Bearer {token}`
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -341,7 +341,7 @@ Authorization: Bearer {token}
 
 ---
 
-### 3️⃣ Public Product Access (No Auth Required)
+###  Public Product Access (No Auth Required)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -354,7 +354,7 @@ Authorization: Bearer {token}
 
 ---
 
-### 4️⃣ Order Simulation (No Auth Required)
+###  Order Simulation (No Auth Required)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -371,7 +371,7 @@ Authorization: Bearer {token}
 | `quantity` | integer | Yes | min:1 |
 
 <details>
-<summary>📋 Example Request & Response</summary>
+<summary> Example Request & Response</summary>
 
 **Request:**
 ```json
@@ -409,14 +409,14 @@ Authorization: Bearer {token}
 
 ---
 
-## 📬 Postman Collection
+##  Postman Collection
 
 A ready-to-use Postman collection is included in the project root for quick API testing.
 
-### 📄 File
+###  File
 
 ```
-📁 project-root/
+ project-root/
 └── Vendor_Product_API.postman_collection.json
 ```
 
@@ -431,13 +431,13 @@ A ready-to-use Postman collection is included in the project root for quick API 
 
 | Folder | # | Description |
 |--------|---|-------------|
-| 🔐 Authentication | 5 | Register, Login (both seeded vendors), Invalid login, Logout |
-| 📦 Vendor Products | 8 | Full CRUD, ownership tests, negative stock test |
-| 🌐 Public Products | 7 | List all, paginated, search by name, view active/inactive/missing |
-| 🛒 Orders | 7 | Success, insufficient stock, inactive product, validation errors, view |
-| ⚠️ Edge Cases | 4 | No token, invalid token, duplicate email, invalid price |
+|  Authentication | 5 | Register, Login (both seeded vendors), Invalid login, Logout |
+|  Vendor Products | 8 | Full CRUD, ownership tests, negative stock test |
+|  Public Products | 7 | List all, paginated, search by name, view active/inactive/missing |
+|  Orders | 7 | Success, insufficient stock, inactive product, validation errors, view |
+|  Edge Cases | 4 | No token, invalid token, duplicate email, invalid price |
 
-### 🔄 Auto Token Management
+###  Auto Token Management
 
 The collection includes **automatic token saving**:
 
@@ -445,7 +445,7 @@ The collection includes **automatic token saving**:
 - All authenticated requests use `{{token}}` in their `Authorization` header
 - **No manual copy-pasting needed** — just login and start testing!
 
-### ✅ Recommended Testing Flow
+###  Recommended Testing Flow
 
 ```
 1. Login          → Run "Login Vendor (Fashion Hub)" to get a token
@@ -495,7 +495,7 @@ vendors              products              orders
 
 ---
 
-## 💡 Design Decisions
+##  Design Decisions
 
 ### 1. Service/Repository Pattern
 Logic is separated from controllers into dedicated **Service** and **Repository** classes. This makes the codebase testable, maintainable, and follows the **Single Responsibility Principle**. Controllers stay thin — they only handle HTTP concerns.
@@ -523,7 +523,7 @@ A shared `ApiResponseTrait` ensures every endpoint returns the same JSON structu
 
 ---
 
-## ❓ Screening Questions
+##  Screening Questions
 
 ### 1. How would you handle two users ordering the last item at the same time?
 
@@ -562,7 +562,7 @@ Without a transaction, a failure between step 2 and 3 would leave stock decremen
 
 ---
 
-## 🌱 Seeded Test Data
+##  Seeded Test Data
 
 The database seeder creates sample data for immediate testing:
 
@@ -575,6 +575,6 @@ The database seeder creates sample data for immediate testing:
 
 ---
 
-## 📄 License
+##  License
 
 This project is open-sourced for assessment purposes.
